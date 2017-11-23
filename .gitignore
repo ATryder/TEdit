@@ -7,6 +7,5 @@
 /build
 /captures
 .externalNativeBuild
-.apk
 /blends/*
 !/blends/*.blend
