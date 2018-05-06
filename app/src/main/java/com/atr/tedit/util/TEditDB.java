@@ -30,6 +30,7 @@ import android.util.Log;
 public class TEditDB {
     public static final String KEY_PATH = "path";
     public static final String KEY_BODY = "body";
+    public static final String KEY_SCROLLPOS = "scrollpos";
     public static final String KEY_ROWID = "_id";
 
     private static final String TAG = "TEditDB";
@@ -38,7 +39,8 @@ public class TEditDB {
 
     private static final String DATABASE_CREATE =
             "create table texts (_id integer primary key autoincrement, "
-                    + "path text not null, body text not null);";
+                    + "path text not null, body text not null, "
+                    + "scrollpos int not null);";
 
     private static final String DATABASE_NAME = "tedit_data";
     private static final String DATABASE_TABLE = "texts";
@@ -84,6 +86,7 @@ public class TEditDB {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_PATH, title);
         initialValues.put(KEY_BODY, body);
+        initialValues.put(KEY_SCROLLPOS, 0);
 
         return mDb.insert(DATABASE_TABLE, null, initialValues);
     }
@@ -98,12 +101,14 @@ public class TEditDB {
 
     public Cursor fetchAllTexts() {
         return mDb.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_PATH,
-                KEY_BODY}, null, null, null, null, null);
+                KEY_BODY, KEY_SCROLLPOS}, null, null,
+                null, null, null);
     }
 
     public long hasFile(String path) {
         Cursor cursor = mDb.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                        KEY_PATH, KEY_BODY}, KEY_PATH + "=" + path, null,
+                        KEY_PATH, KEY_BODY, KEY_SCROLLPOS},
+                KEY_PATH + "=" + path, null,
                 null, null, null, null);
         if (cursor == null || cursor.getColumnIndex(KEY_ROWID) ==  -1)
             return -1;
@@ -113,7 +118,7 @@ public class TEditDB {
 
     public Cursor fetchText(long rowId) throws SQLException {
         Cursor mCursor = mDb.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                                KEY_PATH, KEY_BODY}, KEY_ROWID + "=" + rowId, null,
+                                KEY_PATH, KEY_BODY, KEY_SCROLLPOS}, KEY_ROWID + "=" + rowId, null,
                                 null, null, null, null);
         if (mCursor.getCount() == 0) {
             mCursor.close();
@@ -130,6 +135,13 @@ public class TEditDB {
         ContentValues args = new ContentValues();
         args.put(KEY_PATH, path);
         args.put(KEY_BODY, body);
+
+        return mDb.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
+    }
+    
+    public boolean updateTextState(long rowId, int scrollpos) {
+        ContentValues args = new ContentValues();
+        args.put(KEY_SCROLLPOS, scrollpos);
 
         return mDb.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
     }

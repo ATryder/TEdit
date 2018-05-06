@@ -21,6 +21,7 @@ import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -116,6 +117,9 @@ public class Editor extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        
+        EditText et = (EditText)getView().findViewById(R.id.editorText);
+        
         outState.putLong("Editor.key", key);
     }
 
@@ -123,8 +127,16 @@ public class Editor extends Fragment {
     public void onResume() {
         super.onResume();
 
-        EditText et = (EditText)getView().findViewById(R.id.editorText);
+        final EditText et = (EditText)getView().findViewById(R.id.editorText);
         et.setEnabled(true);
+        et.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.setFocusable(true);
+                v.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
 
         if (!ctx.dbIsOpen() || key < 0)
             return;
@@ -140,6 +152,15 @@ public class Editor extends Fragment {
         }
 
         et.setText(cursor.getString(cursor.getColumnIndex(TEditDB.KEY_BODY)));
+        
+        final int scrollPos = cursor.getInt(cursor.getColumnIndex(TEditDB.KEY_SCROLLPOS));
+        et.post(new Runnable() {
+            @Override
+            public void run() {
+                et.clearFocus();
+                et.scrollTo(0, scrollPos);
+            }
+        });
         cursor.close();
     }
 
@@ -149,20 +170,8 @@ public class Editor extends Fragment {
 
         EditText et = (EditText)getView().findViewById(R.id.editorText);
         et.setEnabled(false);
-
-        if (!ctx.dbIsOpen() || key < 0)
-            return;
-
-        Cursor cursor = ctx.getDB().fetchText(key);
-        if (cursor == null)
-            return;
-
-        String path = TEditActivity.DEFAULTPATH;
-        if (cursor.getColumnIndex(TEditDB.KEY_PATH) !=  -1)
-            path = cursor.getString(cursor.getColumnIndex(TEditDB.KEY_PATH));
-        cursor.close();
-
-        ctx.getDB().updateText(key, path, et.getText().toString());
+        
+        saveToDB();
     }
 
     protected void saveToDB() {
@@ -181,5 +190,6 @@ public class Editor extends Fragment {
         cursor.close();
 
         ctx.getDB().updateText(key, path, et.getText().toString());
+        ctx.getDB().updateTextState(key, et.getScrollY());
     }
 }

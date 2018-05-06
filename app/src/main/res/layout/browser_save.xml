@@ -50,18 +50,23 @@
         android:paddingBottom="5dp"
         android:paddingLeft="3dp"
         android:paddingRight="3dp">
-
+        
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|left">
+        
         <TextView
             android:id="@+id/savebrowsepath"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|left"
             android:lines="1"
             android:maxLines="1"
             android:scrollbars="none"
-            android:scrollHorizontally="true"
             android:textColor="@color/browseText"
             android:textSize="18sp" />
+        </HorizontalScrollView>
 
     </LinearLayout>
     

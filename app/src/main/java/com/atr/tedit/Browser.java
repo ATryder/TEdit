@@ -23,6 +23,7 @@ import android.os.Parcelable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -144,6 +145,7 @@ public class Browser extends ListFragment {
         }
         if (type == TYPE_SAVE)
             keyToSave = savedInstanceState.getLong("TEditBrowser.keyToSave", -1);
+        
     }
 
     @Override
@@ -158,6 +160,13 @@ public class Browser extends ListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         registerForContextMenu(getListView());
+
+        /*if (type == TYPE_SAVE) {
+            ((TextView)getView().findViewById(R.id.savebrowsepath))
+                    .setMovementMethod(new ScrollingMovementMethod());
+        } else
+            ((TextView)getView().findViewById(R.id.browsepath))
+                    .setMovementMethod(new ScrollingMovementMethod());*/
     }
 
     @Override

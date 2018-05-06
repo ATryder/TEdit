@@ -24,7 +24,7 @@
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
             android:paddingRight="5dp"
-            android:paddingLeft="5dp"/>
+            android:paddingLeft="5dp" />
 
         <EditText
             android:id="@+id/editorText"
@@ -39,7 +39,9 @@
             android:scrollbarAlwaysDrawHorizontalTrack="false"
             android:selectAllOnFocus="false"
             android:textColor="@color/editorText"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:overScrollMode="always"
+            android:focusable="false"/>
 
     </LinearLayout>
 </FrameLayout>
