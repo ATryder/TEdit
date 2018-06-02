@@ -17,13 +17,13 @@ package com.atr.tedit;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -160,13 +160,6 @@ public class Browser extends ListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         registerForContextMenu(getListView());
-
-        /*if (type == TYPE_SAVE) {
-            ((TextView)getView().findViewById(R.id.savebrowsepath))
-                    .setMovementMethod(new ScrollingMovementMethod());
-        } else
-            ((TextView)getView().findViewById(R.id.browsepath))
-                    .setMovementMethod(new ScrollingMovementMethod());*/
     }
 
     @Override
@@ -470,6 +463,17 @@ public class Browser extends ListFragment {
         try {
             writeFile(file, body);
         } catch (IOException e) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (!ctx.checkWritePermission()) {
+                    Log.e("TEdit.Browser", "Unable to save file " + file.getPath() + ". Permission denied: "
+                            + e.getMessage());
+                    ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
+                            getString(R.string.error_nowritepermission));
+                    em.show(ctx.getSupportFragmentManager(), "dialog");
+
+                    return false;
+                }
+            }
             Log.e("TEdit.Browser", "Unable to save file " + file.getPath() + ": "
                     + e.getMessage());
             ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
@@ -560,11 +564,20 @@ public class Browser extends ListFragment {
                                 }
                                 Toast.makeText(ctx, getString(R.string.filesaved), Toast.LENGTH_SHORT).show();
                             } catch (IOException e) {
-                                Log.e("TEdit.Browser", "Unable to save file " + filePath + ": "
-                                    + e.getMessage());
-                                ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
-                                        getString(R.string.error_writefile));
-                                em.show(getActivity().getSupportFragmentManager(), "dialog");
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                                        && !ctx.checkWritePermission()) {
+                                    Log.e("TEdit.Browser", "Unable to save file " + filePath + ". Permission denied: "
+                                            + e.getMessage());
+                                    ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
+                                            getString(R.string.error_nowritepermission));
+                                    em.show(ctx.getSupportFragmentManager(), "dialog");
+                                } else {
+                                    Log.e("TEdit.Browser", "Unable to save file " + filePath + ": "
+                                            + e.getMessage());
+                                    ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
+                                            getString(R.string.error_writefile));
+                                    em.show(getActivity().getSupportFragmentManager(), "dialog");
+                                }
                             }
                         }
                     })
@@ -592,11 +605,20 @@ public class Browser extends ListFragment {
                                 }
                                 Toast.makeText(ctx, getString(R.string.filesaved), Toast.LENGTH_SHORT).show();
                             } catch (IOException e) {
-                                Log.e("TEdit.Browser", "Unable to save file " + filePath + ": "
-                                        + e.getMessage());
-                                ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
-                                        getString(R.string.error_writefile));
-                                em.show(getActivity().getSupportFragmentManager(), "dialog");
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                                        && !ctx.checkWritePermission()) {
+                                    Log.e("TEdit.Browser", "Unable to save file " + filePath + ". Permission denied: "
+                                            + e.getMessage());
+                                    ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
+                                            getString(R.string.error_nowritepermission));
+                                    em.show(ctx.getSupportFragmentManager(), "dialog");
+                                } else {
+                                    Log.e("TEdit.Browser", "Unable to save file " + filePath + ": "
+                                            + e.getMessage());
+                                    ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
+                                            getString(R.string.error_writefile));
+                                    em.show(getActivity().getSupportFragmentManager(), "dialog");
+                                }
                             }
                         }
                     })

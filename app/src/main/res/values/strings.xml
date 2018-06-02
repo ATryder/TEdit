@@ -11,6 +11,7 @@
     <string name="missing_file">File does not exist!</string>
     <string name="error_delete">Unable to delete file!</string>
     <string name="error_writefile">Unable to save file!</string>
+    <string name="error_nowritepermission">Permission Denied!\n\nPlease enable storage permission by opening your Android Settings app and selecting Apps-->TEdit-->Permissions.</string>
     <string name="error_readfile">Unable to read file!</string>
     <string name="error_invalidname">Invalid filename!</string>
     <string name="error_direxists">Directory already exists.</string>

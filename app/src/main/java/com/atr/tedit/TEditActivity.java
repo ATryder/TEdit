@@ -14,13 +14,19 @@
  */
 package com.atr.tedit;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -43,6 +49,11 @@ import java.io.IOException;
 
 public class TEditActivity extends AppCompatActivity {
     public static final String DEFAULTPATH = "Untitled";
+    public static final int INIT_BROWSER_PERMISSION = 0;
+    public static final int INIT_TEXT_PERMISSION = 1;
+    public static final int SAVE_DOCUMENT_PERMISSION = 2;
+    public static final int SAVEAS_DOCUMENT_PERMISSION = 3;
+    public static final int OPEN_BROWSER_PERMISSION = 4;
 
     private static final int STATE_BROWSE = 0;
     private static final int STATE_TEXT = 1;
@@ -63,6 +74,8 @@ public class TEditActivity extends AppCompatActivity {
     private long lastTxt = -1;
 
     private Fragment frag;
+
+    private File tmpFileToOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,6 +206,18 @@ public class TEditActivity extends AppCompatActivity {
     }
 
     private void initializeToBrowser() {
+        initializeToBrowser(false);
+    }
+
+    private void initializeToBrowser(boolean skipPermissionCheck) {
+        if (!skipPermissionCheck
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!checkWritePermission()) {
+                requestPermission(INIT_BROWSER_PERMISSION);
+                return;
+            }
+        }
+
         state = STATE_BROWSE;
         buttonBar.setToBrowser();
         frag = Browser.newInstance(currentPath.getPath());
@@ -203,6 +228,13 @@ public class TEditActivity extends AppCompatActivity {
     }
 
     private void initializeToText(File file) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!checkWritePermission()) {
+                tmpFileToOpen = file;
+                requestPermission(INIT_TEXT_PERMISSION);
+                return;
+            }
+        }
         String content = null;
         try {
             content = Browser.readFile(file);
@@ -549,5 +581,236 @@ public class TEditActivity extends AppCompatActivity {
         long id = cursor.getLong(cursor.getColumnIndex(TEditDB.KEY_ROWID));
         cursor.close();
         openDocument(id);
+    }
+
+    protected void saveDocument(boolean skipPermissionCheck) {
+        if (!skipPermissionCheck
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && !checkWritePermission()) {
+            requestPermission(SAVE_DOCUMENT_PERMISSION);
+            return;
+        }
+
+        if (!dbIsOpen()) {
+            Log.e("TEdit", "Unable to save file: Database is not open.");
+            ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
+                    getString(R.string.error_dbclosed));
+            em.show(getSupportFragmentManager(), "dialog");
+            return;
+        }
+
+        if (getLastTxt() == -1)
+            return;
+
+        ((Editor)getFrag()).saveToDB();
+        Cursor cursor = getDB().fetchText(getLastTxt());
+        if (cursor == null || cursor.getColumnIndex(TEditDB.KEY_PATH) == -1
+                || cursor.getColumnIndex(TEditDB.KEY_BODY) ==  -1) {
+            if (cursor == null) {
+                Log.e("TEdit", "Unable to save file: Database did not contain key.");
+            } else
+                Log.e("TEdit", "Unable to save file: Database did not contain column");
+            ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
+                    getString(R.string.error_dberror));
+            em.show(getSupportFragmentManager(), "dialog");
+            cursor.close();
+            return;
+        }
+
+        String path = cursor.getString(cursor.getColumnIndex(TEditDB.KEY_PATH));
+        if (path.equals(TEditActivity.DEFAULTPATH)) {
+            saveBrowser(getSavePath().toString());
+            cursor.close();
+            return;
+        }
+
+
+        String mediaState = Environment.getExternalStorageState();
+        if (!(Environment.MEDIA_MOUNTED.equals(mediaState)
+                || Environment.MEDIA_MOUNTED_READ_ONLY.equals(mediaState))) {
+            ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
+                    getString(R.string.error_unmounted));
+            em.show(getSupportFragmentManager(), "dialog");
+            cursor.close();
+            return;
+        } else if (!path.startsWith(Environment.getExternalStorageDirectory().getPath())) {
+            ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
+                    getString(R.string.error_protectedpath));
+            em.show(getSupportFragmentManager(), "dialog");
+            cursor.close();
+            return;
+        }
+
+        String body = cursor.getString(cursor.getColumnIndex(TEditDB.KEY_BODY));
+        cursor.close();
+        File file = new File(path);
+        try {
+            Browser.writeFile(file, body);
+            Toast.makeText(this, "File Saved", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                    && !checkWritePermission()) {
+                Log.e("TEdit.Browser", "Unable to save file " + file.getPath() + ". Permission denied: "
+                        + e.getMessage());
+                ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
+                        getString(R.string.error_nowritepermission));
+                em.show(getSupportFragmentManager(), "dialog");
+            } else {
+                Log.e("TEdit.Editor", "Unable to save file " + file.getPath() + ": "
+                        + e.getMessage());
+                ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
+                        getString(R.string.error_writefile));
+                em.show(getSupportFragmentManager(), "dialog");
+            }
+        }
+    }
+
+    protected void saveAsDocument(boolean skipPermissionCheck) {
+        if (!skipPermissionCheck
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && !checkWritePermission()) {
+            requestPermission(SAVEAS_DOCUMENT_PERMISSION);
+            return;
+        }
+
+        if (!dbIsOpen()) {
+            Log.e("TEdit", "Unable to save file: Database is not open.");
+            ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
+                    getString(R.string.error_dbclosed));
+            em.show(getSupportFragmentManager(), "dialog");
+            return;
+        }
+
+        if (getLastTxt() == -1)
+            return;
+
+        ((Editor)getFrag()).saveToDB();
+        Cursor cursor = getDB().fetchText(getLastTxt());
+        if (cursor == null || cursor.getColumnIndex(TEditDB.KEY_PATH) == -1
+                || cursor.getColumnIndex(TEditDB.KEY_BODY) ==  -1) {
+            if (cursor == null) {
+                Log.e("TEdit", "Unable to save file: Database did not contain key.");
+            } else
+                Log.e("TEdit", "Unable to save file: Database did not contain column");
+            ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
+                    getString(R.string.error_dberror));
+            em.show(getSupportFragmentManager(), "dialog");
+            cursor.close();
+            return;
+        }
+
+        saveBrowser(getSavePath().toString());
+    }
+
+    protected void requestOpenBrowser() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && !checkWritePermission()) {
+            requestPermission(SAVEAS_DOCUMENT_PERMISSION);
+            return;
+        }
+
+        openBrowser(getCurrentPath().getPath());
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    protected boolean checkWritePermission() {
+        return ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void requestPermission(int requestState) {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestState);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[]results) {
+        switch(requestCode) {
+            case SAVE_DOCUMENT_PERMISSION:
+                if (results.length > 0
+                        && results[0] == PackageManager.PERMISSION_GRANTED) {
+                    saveDocument(true);
+                } else {
+                    ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
+                            getString(R.string.error_nowritepermission));
+                    em.show(getSupportFragmentManager(), "dialog");
+                }
+                break;
+            case SAVEAS_DOCUMENT_PERMISSION:
+                if (results.length > 0
+                        && results[0] == PackageManager.PERMISSION_GRANTED) {
+                    saveAsDocument(true);
+                } else {
+                    ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
+                            getString(R.string.error_nowritepermission));
+                    em.show(getSupportFragmentManager(), "dialog");
+                }
+                break;
+            case OPEN_BROWSER_PERMISSION:
+                if (results.length > 0
+                        && results[0] == PackageManager.PERMISSION_GRANTED) {
+                    openBrowser(getCurrentPath().getPath());
+                } else {
+                    ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
+                            getString(R.string.error_nowritepermission));
+                    em.show(getSupportFragmentManager(), "dialog");
+                }
+                break;
+            case INIT_BROWSER_PERMISSION:
+                initializeToBrowser(true);
+                break;
+            case INIT_TEXT_PERMISSION:
+                if (results.length > 0
+                        && results[0] == PackageManager.PERMISSION_GRANTED) {
+                    initializeToText(tmpFileToOpen);
+                    tmpFileToOpen = null;
+                } else if (!dbIsOpen()) {
+                    finish();
+                } else {
+                    if (getLastTxt() != -1) {
+                        Cursor cursor = getDB().fetchText(getLastTxt());
+                        if (cursor != null) {
+                            cursor.close();
+                            state = STATE_TEXT;
+                            buttonBar.setToText();
+                            frag = Editor.newInstance(getLastTxt());
+
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.add(R.id.activitycontent, frag);
+                            ft.commit();
+                            return;
+                        }
+                    }
+
+                    Cursor cursor = getDB().fetchAllTexts();
+                    if (cursor == null || cursor.getCount() <= 0) {
+                        if (cursor != null)
+                            cursor.close();
+                        finish();
+                        return;
+                    }
+
+                    cursor.moveToFirst();
+                    if (cursor.getColumnIndex(TEditDB.KEY_ROWID) == -1) {
+                        cursor.close();
+                        finish();
+                        return;
+                    }
+                    long id = cursor.getLong(cursor.getColumnIndex(TEditDB.KEY_ROWID));
+                    cursor.close();
+                    lastTxt = id;
+                    state = STATE_TEXT;
+                    buttonBar.setToText();
+                    frag = Editor.newInstance(getLastTxt());
+
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.add(R.id.activitycontent, frag);
+                    ft.commit();
+                }
+                break;
+        }
     }
 }

@@ -308,7 +308,7 @@ public class ButtonBar {
         button_open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ctx.openBrowser(ctx.getCurrentPath().getPath());
+                ctx.requestOpenBrowser();
             }
         });
 
@@ -332,69 +332,7 @@ public class ButtonBar {
         button_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!ctx.dbIsOpen()) {
-                    Log.e("TEdit", "Unable to save file: Database is not open.");
-                    ErrorMessage em = ErrorMessage.getInstance(ctx.getString(R.string.alert),
-                            ctx.getString(R.string.error_dbclosed));
-                    em.show(ctx.getSupportFragmentManager(), "dialog");
-                    return;
-                }
-
-                if (ctx.getLastTxt() == -1)
-                    return;
-
-                ((Editor)ctx.getFrag()).saveToDB();
-                Cursor cursor = ctx.getDB().fetchText(ctx.getLastTxt());
-                if (cursor == null || cursor.getColumnIndex(TEditDB.KEY_PATH) == -1
-                        || cursor.getColumnIndex(TEditDB.KEY_BODY) ==  -1) {
-                    if (cursor == null) {
-                        Log.e("TEdit", "Unable to save file: Database did not contain key.");
-                    } else
-                        Log.e("TEdit", "Unable to save file: Database did not contain column");
-                    ErrorMessage em = ErrorMessage.getInstance(ctx.getString(R.string.alert),
-                            ctx.getString(R.string.error_dberror));
-                    em.show(ctx.getSupportFragmentManager(), "dialog");
-                    cursor.close();
-                    return;
-                }
-
-                String path = cursor.getString(cursor.getColumnIndex(TEditDB.KEY_PATH));
-                if (path.equals(TEditActivity.DEFAULTPATH)) {
-                    ctx.saveBrowser(ctx.getSavePath().toString());
-                    cursor.close();
-                    return;
-                }
-
-
-                String mediaState = Environment.getExternalStorageState();
-                if (!(Environment.MEDIA_MOUNTED.equals(mediaState)
-                        || Environment.MEDIA_MOUNTED_READ_ONLY.equals(mediaState))) {
-                    ErrorMessage em = ErrorMessage.getInstance(ctx.getString(R.string.alert),
-                            ctx.getString(R.string.error_unmounted));
-                    em.show(ctx.getSupportFragmentManager(), "dialog");
-                    cursor.close();
-                    return;
-                } else if (!path.startsWith(Environment.getExternalStorageDirectory().getPath())) {
-                    ErrorMessage em = ErrorMessage.getInstance(ctx.getString(R.string.alert),
-                            ctx.getString(R.string.error_protectedpath));
-                    em.show(ctx.getSupportFragmentManager(), "dialog");
-                    cursor.close();
-                    return;
-                }
-
-                String body = cursor.getString(cursor.getColumnIndex(TEditDB.KEY_BODY));
-                cursor.close();
-                File file = new File(path);
-                try {
-                    Browser.writeFile(file, body);
-                    Toast.makeText(ctx, "File Saved", Toast.LENGTH_SHORT).show();
-                } catch (IOException e) {
-                    Log.e("TEdit.Editor", "Unable to save file " + file.getPath() + ": "
-                            + e.getMessage());
-                    ErrorMessage em = ErrorMessage.getInstance(ctx.getString(R.string.alert),
-                            ctx.getString(R.string.error_writefile));
-                    em.show(ctx.getSupportFragmentManager(), "dialog");
-                }
+                ctx.saveDocument(false);
             }
         });
 
@@ -418,33 +356,7 @@ public class ButtonBar {
         button_save_as.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!ctx.dbIsOpen()) {
-                    Log.e("TEdit", "Unable to save file: Database is not open.");
-                    ErrorMessage em = ErrorMessage.getInstance(ctx.getString(R.string.alert),
-                            ctx.getString(R.string.error_dbclosed));
-                    em.show(ctx.getSupportFragmentManager(), "dialog");
-                    return;
-                }
-
-                if (ctx.getLastTxt() == -1)
-                    return;
-
-                ((Editor)ctx.getFrag()).saveToDB();
-                Cursor cursor = ctx.getDB().fetchText(ctx.getLastTxt());
-                if (cursor == null || cursor.getColumnIndex(TEditDB.KEY_PATH) == -1
-                        || cursor.getColumnIndex(TEditDB.KEY_BODY) ==  -1) {
-                    if (cursor == null) {
-                        Log.e("TEdit", "Unable to save file: Database did not contain key.");
-                    } else
-                        Log.e("TEdit", "Unable to save file: Database did not contain column");
-                    ErrorMessage em = ErrorMessage.getInstance(ctx.getString(R.string.alert),
-                            ctx.getString(R.string.error_dberror));
-                    em.show(ctx.getSupportFragmentManager(), "dialog");
-                    cursor.close();
-                    return;
-                }
-
-                ctx.saveBrowser(ctx.getSavePath().toString());
+                ctx.saveAsDocument(false);
             }
         });
 
