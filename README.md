@@ -12,3 +12,8 @@ src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
  alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=com.atr.tedit)
 
 You can find various APK installers for TEdit at http://1337atr.weebly.com/tedit.html
+
+[<img 
+src="http://i.creativecommons.org/p/zero/1.0/88x31.png"
+ alt="CC0" height="80">](http://creativecommons.org/publicdomain/zero/1.0/)
+To the extent possible under law, the person who associated CC0 with this work has waived all copyright and related or neighboring rights to this work.
