@@ -14,6 +14,7 @@
  */
 package com.atr.tedit;
 
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -46,6 +47,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -396,14 +398,14 @@ public class Browser extends ListFragment {
         }
     }
 
-    private boolean hasExtension(String name) {
+    /*private boolean hasExtension(String name) {
         for (String ext : extensions) {
             if (name.endsWith(ext))
                 return true;
         }
 
         return false;
-    }
+    }*/
 
     protected boolean saveFile(String filename, final String body) {
         if (!currentDir.exists()) {
@@ -422,12 +424,12 @@ public class Browser extends ListFragment {
             return false;
         }
 
-        if (!hasExtension(filename.toLowerCase())) {
+        /*if (!hasExtension(filename.toLowerCase())) {
             if (filename.endsWith(".")) {
                 filename += "txt";
             } else
                 filename += ".txt";
-        }
+        }*/
 
         final File file = new File(currentDir, filename);
 
@@ -521,12 +523,37 @@ public class Browser extends ListFragment {
 
     private class TxtFilter implements FileFilter {
         public boolean accept(File file) {
+            if (file.isDirectory())
+                return false;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                return acceptByMime(file);
+
+            return acceptByExtension(file);
+        }
+
+        private boolean acceptByExtension(File file) {
             for (String s : extensions) {
                 if (file.getName().toLowerCase().endsWith(s))
                     return true;
             }
 
             return false;
+        }
+
+        @TargetApi(Build.VERSION_CODES.O)
+        private boolean acceptByMime(File file) {
+            String mime = "";
+            try {
+                mime = Files.probeContentType(file.toPath());
+            } catch (Exception e) {
+                mime = null;
+            } finally {
+                if (mime == null)
+                    return acceptByExtension(file);
+                Log.i("TEdit", file.getName() + " MIME type: " + mime);
+                return mime.startsWith("text/");
+            }
         }
     }
 
