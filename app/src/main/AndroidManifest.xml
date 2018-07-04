@@ -6,9 +6,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/tedit_icon"
+        android:icon="@mipmap/tedit_square_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/tedit_icon_round"
+        android:roundIcon="@mipmap/tedit_circle_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:hardwareAccelerated="true">
