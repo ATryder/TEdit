@@ -108,8 +108,7 @@ public class Editor extends Fragment {
 
             String mediaState = Environment.getExternalStorageState();
             if (!(Environment.MEDIA_MOUNTED.equals(mediaState)
-                    || Environment.MEDIA_MOUNTED_READ_ONLY.equals(mediaState))
-                    || !path.startsWith(Environment.getExternalStorageDirectory().getPath())) {
+                    || Environment.MEDIA_MOUNTED_READ_ONLY.equals(mediaState))) {
                 Toast.makeText(ctx, R.string.readonlymode, Toast.LENGTH_SHORT).show();
             }
         }

@@ -287,7 +287,12 @@ public class Browser extends ListFragment {
 
     protected void upDir() {
         File parent = currentDir.getParentFile();
-        if (parent == null) {
+        if (parent == null)
+            return;
+
+        File[] dirList = parent.listFiles(new DirFilter());
+        if (dirList == null || dirList.length == 0) {
+            Toast.makeText(ctx, getString(R.string.error_permission_denied), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -441,13 +446,13 @@ public class Browser extends ListFragment {
             em.show(ctx.getSupportFragmentManager(), "dialog");
 
             return false;
-        } else if (!file.getPath().startsWith(Environment.getExternalStorageDirectory().getPath())) {
+        }/* else if (!file.getPath().startsWith(Environment.getExternalStorageDirectory().getPath())) {
             ErrorMessage em = ErrorMessage.getInstance(ctx.getString(R.string.alert),
                     ctx.getString(R.string.error_protectedpath));
             em.show(ctx.getSupportFragmentManager(), "dialog");
 
             return false;
-        }
+        }*/
 
         if (file.exists()) {
             //prompt overwrite
@@ -476,6 +481,15 @@ public class Browser extends ListFragment {
                     return false;
                 }
             }
+
+            if (!file.getPath().startsWith(Environment.getExternalStorageDirectory().getPath())) {
+                ErrorMessage em = ErrorMessage.getInstance(ctx.getString(R.string.alert),
+                        ctx.getString(R.string.error_protectedpath));
+                em.show(ctx.getSupportFragmentManager(), "dialog");
+
+                return false;
+            }
+
             Log.e("TEdit.Browser", "Unable to save file " + file.getPath() + ": "
                     + e.getMessage());
             ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
@@ -598,6 +612,10 @@ public class Browser extends ListFragment {
                                     ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
                                             getString(R.string.error_nowritepermission));
                                     em.show(ctx.getSupportFragmentManager(), "dialog");
+                                } else if (!filePath.startsWith(Environment.getExternalStorageDirectory().getPath())) {
+                                    ErrorMessage em = ErrorMessage.getInstance(ctx.getString(R.string.alert),
+                                            ctx.getString(R.string.error_protectedpath));
+                                    em.show(ctx.getSupportFragmentManager(), "dialog");
                                 } else {
                                     Log.e("TEdit.Browser", "Unable to save file " + filePath + ": "
                                             + e.getMessage());
@@ -638,6 +656,10 @@ public class Browser extends ListFragment {
                                             + e.getMessage());
                                     ErrorMessage em = ErrorMessage.getInstance(getString(R.string.alert),
                                             getString(R.string.error_nowritepermission));
+                                    em.show(ctx.getSupportFragmentManager(), "dialog");
+                                } else if (!filePath.startsWith(Environment.getExternalStorageDirectory().getPath())) {
+                                    ErrorMessage em = ErrorMessage.getInstance(ctx.getString(R.string.alert),
+                                            ctx.getString(R.string.error_protectedpath));
                                     em.show(ctx.getSupportFragmentManager(), "dialog");
                                 } else {
                                     Log.e("TEdit.Browser", "Unable to save file " + filePath + ": "
