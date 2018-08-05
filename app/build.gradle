@@ -7,8 +7,8 @@ android {
         applicationId "com.atr.tedit"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 8
-        versionName '2.1.2'
+        versionCode 9
+        versionName '2.1.3'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

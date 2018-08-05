@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">TEdit</string>
-    <string name="version">v2.1.2</string>
+    <string name="version">v2.1.3</string>
     <string name="empty_dir">No Contents</string>
     <string name="save_filename">Untitled.txt</string>
     <string name="alert">Alert</string>

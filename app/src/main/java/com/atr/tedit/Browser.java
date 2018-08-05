@@ -343,7 +343,6 @@ public class Browser extends ListFragment {
                 fileList = new File[0];
             numDirs = dirList.length;
             numFiles = fileList.length;
-            Logger.getLogger(getClass().getName()).log(Level.INFO, currentDir.getPath());
 
             //sort directories
             if (numDirs > 1) {

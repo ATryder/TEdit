@@ -134,7 +134,12 @@ public class TEditActivity extends AppCompatActivity {
                 data = (Uri)obj;
             }
 
-            File file = new File(data.getPath());
+            String[] dataPath = data.getPath().split(":");
+            File file;
+            if (dataPath.length > 1) {
+                file = new File(dataPath[1]);
+            } else
+                file = new File(dataPath[0]);
             if (!file.exists() || file.isDirectory()) {
                 initializeToBrowser();
                 return;
