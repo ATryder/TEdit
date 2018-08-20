@@ -4,11 +4,11 @@
 
 This privacy policy document is to clearly state and provides information on what, how and why personal data or information is collected, used and disclosed when this software is utilized and the choices you have associated with that data. 
 
-The objective of this policy document is to provide an open environment between developer and users of this software by openly stating what information the developer collects or not. By utilizing this software, it means you accept all the terms and conditions of the developer peculiar only to TEdit software. This Policy applies to this software and the developer would not be held responsible for the content or privacy practices on any third party app that you may use alongside TEdit, therefore it is advisable to read up the privacy policies of third party services that you may utilize alongside TEdit software. <HR>
+The objective of this policy document is to provide an open environment between developer and users of this software by openly stating what information the developer collects or not. By utilizing this software, it means you accept all the terms and conditions of the developer particular only to TEdit software. This Policy applies to this software and the developer would not be held responsible for the content or privacy practices on any third party app that you may use alongside TEdit, therefore it is advisable to read up the privacy policies of third party services that you may utilize alongside TEdit software. <HR>
 
 ## Information Collection And Use
 
-TEdit is built to be simple and efficient as possible without the need of any dependency by which information may be collected. However, to enable TEdit read text files located on your device storage, storage permission has to be enabled and enabling this permission doesn't give access to information being retrieved by the developer.
+TEdit is built to be simple and efficient without the need of any dependency by which information may be collected. However, to enable TEdit to read text files located on your device storage, storage permission has to be enabled and enabling this permission doesn't give access to information being retrieved by the developer.
 This permission can be revoked when they are not needed, this is privy to only devices running Android 6.0 upward.
 
 
@@ -35,7 +35,7 @@ The security of your data is important, but remember that no method of transmiss
 
 ## Children's Privacy
 
-TEdit is a general software with functionalities that doesn't constrain the use of the software by any grade except otherwise stated in a policy or law guiding that locale. <hr>
+TEdit is a general software with functionalities that does not constrain the use of the software by any grade except otherwise stated in a policy or law guiding that locale. <hr>
 
 
 ## Changes To This Privacy Policy
