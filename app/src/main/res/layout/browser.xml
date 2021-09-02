@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/cream">
+
+    <LinearLayout
+        android:id="@+id/browsepathlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:paddingTop="5dp">
+        
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|left">
+        
+            <TextView
+                android:id="@+id/browsepath"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|left"
+                android:singleLine="true"
+                android:scrollbars="none"
+                android:textSize="18sp" />
+        </HorizontalScrollView>
+
+    </LinearLayout>
+    
+    <ListView android:id="@+id/android:list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    <TextView android:id="@+id/android:empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:text="@string/empty_dir"/>
+
+</LinearLayout>

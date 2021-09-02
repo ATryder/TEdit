@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="darkRoast">#362012</color>
+    <color name="coffee">#4d2e19</color>
+    <color name="coffeeNcream">#9f7c65</color>
+    <color name="darkCream">#e3cdad</color>
+    <color name="cream">#f1e5d1</color>
+    <color name="lightRust">#b7703e</color>
+    <color name="colorPrimary">#494949</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#0062FF</color>
+    <color name="browseText">#f6f6f6</color>
+    <color name="browseTextAccent">#999999</color>
+    <color name="editor">#FFFFFF</color>
+    <color name="editorText">#555555</color>
+    <color name="greenDeep">#1f2c18</color>
+    <color name="greenDark">#2b3e21</color>
+    <color name="greenPrimary">#97bf80</color>
+    <color name="greenAccent">#cbffab</color>
+    <color name="translucentBlack">#b0000000</color>
+</resources>

@@ -1,0 +1,1 @@
+Un éditeur de texte avec navigateur de fichiers graphique.

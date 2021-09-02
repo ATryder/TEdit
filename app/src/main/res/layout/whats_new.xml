@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/v250"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_weight="1"
+        android:padding="3dp"
+        android:text="Version 2.5.0:" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="3dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
+            android:layout_marginRight="8dp"
+            android:layout_weight="0"
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/bulletpoint" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
+            android:layout_weight="1"
+            android:autoLink="web"
+            android:text="TEdit will no longer receive updates through F-Droid. To continue receiving updated versions of TEdit consider installing TEdit from Google Play, the Amazon App store or direct from my website. The address to my website is listed in all help windows.\n\nGoogle Play: https://play.google.com/store/apps/details?id=com.atr.tedit\n\nAmazon: https://www.amazon.com/Adam-T-Ryder-TEdit/dp/B01NCH9ZS1\n\nDirect: https://www.inventati.org/1337gallery/apps/tedit/tedit.html" />
+    </LinearLayout>
+</LinearLayout>

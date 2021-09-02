@@ -1,0 +1,78 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="colorPrimaryDark">@color/darkRoast</item>
+        <item name="colorPrimary">@color/darkCream</item>
+        <item name="colorAccent">@color/coffee</item>
+        <item name="android:textColor">@color/coffee</item>
+        <item name="android:textColorPrimary">@color/coffee</item>
+        <item name="android:textColorSecondary">@color/coffeeNcream</item>
+        <item name="android:colorBackground">@color/coffeeNcream</item>
+        <item name="colorButtonNormal">@color/coffee</item>
+        <item name="colorControlHighlight">@color/darkCream</item>
+        <item name="alertDialogTheme">@style/AppTheme.Alert</item>
+        <item name="android:radioButtonStyle">@style/radioButtonDark</item>
+        <item name="android:checkboxStyle">@style/checkBoxDark</item>
+        <item name="android:textColorLink">@color/lightRust</item>
+    </style>
+
+    <style name="Dark.Roast" parent="AppTheme">
+        <item name="colorPrimaryDark">@color/darkRoast</item>
+        <item name="colorPrimary">@color/coffee</item>
+        <item name="colorAccent">@color/cream</item>
+        <item name="android:textColor">@color/cream</item>
+        <item name="android:textColorPrimary">@color/cream</item>
+        <item name="android:textColorSecondary">@color/darkCream</item>
+        <item name="android:colorBackground">@color/darkCream</item>
+        <item name="colorButtonNormal">@color/coffeeNcream</item>
+        <item name="colorControlHighlight">@color/coffee</item>
+        <item name="android:radioButtonStyle">@style/radioButtonLight</item>
+        <item name="android:checkboxStyle">@style/checkBoxLight</item>
+        <item name="android:textColorLink">@color/lightRust</item>
+    </style>
+
+    <style name="Coffee.Cream" parent="AppTheme">
+        <item name="colorAccent">@color/coffee</item>
+        <item name="android:textColor">@color/coffee</item>
+        <item name="android:textColorPrimary">@color/coffee</item>
+        <item name="android:textColorSecondary">@color/coffeeNcream</item>
+        <item name="colorPrimary">@color/darkCream</item>
+        <item name="colorPrimaryDark">@color/darkRoast</item>
+        <item name="android:colorForeground">@color/coffee</item>
+        <item name="android:textColorPrimaryInverse">@color/darkRoast</item>
+        <item name="android:textColorSecondaryInverse">?android:attr/textColorHintInverse</item>
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>
+        <item name="android:radioButtonStyle">@style/radioButtonDark</item>
+        <item name="android:checkboxStyle">@style/checkBoxDark</item>
+    </style>
+
+    <style name="AppTheme.Alert" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:colorBackground">@color/cream</item>
+    </style>
+
+    <style name="radioButtonLight" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/cream</item>
+    </style>
+
+    <style name="radioButtonDark" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/coffee</item>
+    </style>
+
+    <style name="checkBoxLight" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textColor">@color/cream</item>
+    </style>
+
+    <style name="checkBoxDark" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textColor">@color/coffee</item>
+    </style>
+
+    <style name="buttonFlatDarkRust" parent="Dark.Roast">
+        <item name="android:textColor">@color/lightRust</item>
+        <item name="colorControlHighlight">@color/coffeeNcream</item>
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>
+    </style>
+
+</resources>

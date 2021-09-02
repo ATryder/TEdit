@@ -1,0 +1,17 @@
+- File browser is now compliant with Android 11 storage API security restrictions.
+
+- TEdit can now only open directories explicitly permitted by the user.
+
+- Added threading and animation to the file browser when switching directories.
+
+- Option to move to the parent directory in the file browser when Android's Back action is initiated or close TEdit.
+
+- File path display in file browsers now properly scrolls to the end of the file path when switching directories.
+
+- Removed confusing READ ONLY message when sending files to TEdit from other applications.
+
+- Fixed potential problem when overwriting files on SDCards on some devices.
+
+- Added option to enable browsing the device's root directory.
+
+- Added Sha256 sum for F-Droid.

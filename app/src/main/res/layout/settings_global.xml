@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settingsRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/settings_background_transition">
+
+    <ViewAnimator
+        android:id="@+id/settingsAnimator"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@color/coffee"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.8">
+
+        <ScrollView
+            android:id="@+id/settingsScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbarAlwaysDrawHorizontalTrack="false"
+            android:scrollbarAlwaysDrawVerticalTrack="false"
+            android:scrollbars="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/settingsScrollLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="12dp">
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/settingsHeaderLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/localButton"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <FrameLayout
+                        android:id="@+id/settingsHeaderBackground"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@color/lightRust"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHeight_default="percent"
+                        app:layout_constraintHeight_percent="0.35"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/settingsHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:gravity="top|start"
+                        android:text="@string/settings_global"
+                        android:textColor="@color/cream"
+                        android:textSize="28dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <Button
+                    android:id="@+id/localButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="12dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/settings_local_button"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toTopOf="@+id/settingsLayout"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/spacer"
+                    app:layout_constraintTop_toBottomOf="@+id/settingsHeaderLayout" />
+
+                <TextView
+                    android:id="@+id/spacer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="12dp"
+                    android:singleLine="true"
+                    android:text=""
+                    app:layout_constraintBottom_toTopOf="@+id/settingsLayout"
+                    app:layout_constraintLeft_toRightOf="@+id/localButton"
+                    app:layout_constraintRight_toLeftOf="@+id/helpButton"
+                    app:layout_constraintTop_toBottomOf="@+id/settingsHeaderLayout" />
+
+                <Button
+                    android:id="@+id/helpButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginBottom="12dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/help"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toTopOf="@+id/settingsLayout"
+                    app:layout_constraintLeft_toRightOf="@+id/spacer"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/settingsHeaderLayout" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/settingsLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/localButton">
+
+                    <TextView
+                        android:id="@+id/systemLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_system"
+                        android:textColor="@color/coffeeNcream"
+                        android:textSize="20dp"
+                        app:layout_constraintBottom_toTopOf="@+id/startupLabel"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/startupLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/settings_startupDir"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/startupScroll"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/systemLabel" />
+
+
+                    <HorizontalScrollView
+                        android:id="@+id/startupScroll"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:scrollbarAlwaysDrawHorizontalTrack="false"
+                        app:layout_constraintBottom_toTopOf="@+id/fontLabel"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@+id/startupBrowse"
+                        app:layout_constraintTop_toBottomOf="@+id/startupLabel">
+
+                        <TextView
+                            android:id="@+id/startupDir"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:text="Directory"
+                            android:textSize="16dp" />
+
+                    </HorizontalScrollView>
+
+                    <Button
+                        android:id="@+id/startupBrowse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/browse"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/fontLabel"
+                        app:layout_constraintLeft_toRightOf="@+id/startupScroll"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/startupLabel" />
+
+                    <TextView
+                        android:id="@+id/fontLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/settings_typeface"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/fontBrowse"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/startupScroll" />
+
+                    <Button
+                        android:id="@+id/fontBrowse"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/browse"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/textDirLabel"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fontLabel" />
+
+                    <TextView
+                        android:id="@+id/textDirLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/settings_textDir"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/textDirGroup"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fontBrowse" />
+
+                    <RadioGroup
+                        android:id="@+id/textDirGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:paddingLeft="24dp"
+                        app:layout_constraintBottom_toTopOf="@+id/aobLabel"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textDirLabel">
+
+                        <RadioButton
+                            android:id="@+id/textDirLTR"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/LTR"
+                            android:textSize="16dp" />
+
+                        <RadioButton
+                            android:id="@+id/textDirRTL"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="1"
+                            android:text="@string/RTL"
+                            android:textSize="16dp" />
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/aobLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/settings_actiononback"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/aobGroup"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textDirGroup" />
+
+                    <RadioGroup
+                        android:id="@+id/aobGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:paddingLeft="24dp"
+                        app:layout_constraintBottom_toTopOf="@+id/enableRoot"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/aobLabel">
+
+                        <RadioButton
+                            android:id="@+id/aobParent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/settings_aobparent"
+                            android:textSize="16dp" />
+
+                        <RadioButton
+                            android:id="@+id/aobClose"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="1"
+                            android:text="@string/settings_aobclose"
+                            android:textSize="16dp" />
+                    </RadioGroup>
+
+                    <CheckBox
+                        android:id="@+id/enableRoot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/enableroot"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/editorLabel"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/aobGroup" />
+
+                    <TextView
+                        android:id="@+id/editorLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:text="@string/settings_editor"
+                        android:textColor="@color/coffeeNcream"
+                        android:textSize="20dp"
+                        app:layout_constraintBottom_toTopOf="@+id/editorFontLabel"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/enableRoot" />
+
+                    <TextView
+                        android:id="@+id/editorFontLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/settings_typeface"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/editorFontBrowse"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editorLabel" />
+
+                    <Button
+                        android:id="@+id/editorFontBrowse"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/browse"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/editorFontSizeLayout"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editorFontLabel" />
+
+                    <LinearLayout
+                        android:id="@+id/editorFontSizeLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="7dp"
+                        app:layout_constraintBottom_toTopOf="@+id/wordWrap"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editorFontBrowse">
+
+                        <TextView
+                            android:id="@+id/editorFontSizeLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settings_fontsize"
+                            android:textSize="16dp"
+                            android:layout_weight="0"
+                            android:layout_gravity="left|center_vertical" />
+
+                        <Spinner
+                            android:id="@+id/editorFontSize"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_weight="1"
+                            android:layout_gravity="left|center_vertical"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
+
+                    <CheckBox
+                        android:id="@+id/wordWrap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/wordwrap"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/editorTextDirLabel"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editorFontSizeLayout" />
+
+                    <TextView
+                        android:id="@+id/editorTextDirLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/settings_textDir"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/editorTextDirGroup"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/wordWrap" />
+
+                    <RadioGroup
+                        android:id="@+id/editorTextDirGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:paddingLeft="24dp"
+                        app:layout_constraintBottom_toTopOf="@+id/cancelButton"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editorTextDirLabel">
+
+                        <RadioButton
+                            android:id="@+id/editorTextDirLTR"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/LTR"
+                            android:textSize="16dp" />
+
+                        <RadioButton
+                            android:id="@+id/editorTextDirRTL"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="1"
+                            android:text="@string/RTL"
+                            android:textSize="16dp" />
+                    </RadioGroup>
+
+                    <Button
+                        android:id="@+id/cancelButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:layout_marginRight="8dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/cancel"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="1"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@+id/saveButton"
+                        app:layout_constraintTop_toBottomOf="@+id/editorTextDirGroup" />
+
+                    <Button
+                        android:id="@+id/saveButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/save"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/cancelButton"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editorTextDirGroup" />
+
+                </android.support.constraint.ConstraintLayout>
+            </android.support.constraint.ConstraintLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/localSettingsScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbarAlwaysDrawHorizontalTrack="false"
+            android:scrollbarAlwaysDrawVerticalTrack="false"
+            android:scrollbars="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/localSettingsScrollLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="12dp">
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/localSettingsHeaderLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/globalButton"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <FrameLayout
+                        android:id="@+id/localSettingsHeaderBackground"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@color/lightRust"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHeight_default="percent"
+                        app:layout_constraintHeight_percent="0.35"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/localSettingsHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:gravity="top|start"
+                        android:text="@string/settings_local"
+                        android:textColor="@color/cream"
+                        android:textSize="28dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <Button
+                    android:id="@+id/globalButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="12dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/settings_global_button"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toTopOf="@+id/localSettingsLayout"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/localSpacer"
+                    app:layout_constraintTop_toBottomOf="@+id/localSettingsHeaderLayout" />
+
+                <TextView
+                    android:id="@+id/localSpacer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="12dp"
+                    android:singleLine="true"
+                    android:text=""
+                    app:layout_constraintBottom_toTopOf="@+id/localSettingsLayout"
+                    app:layout_constraintLeft_toRightOf="@+id/globalButton"
+                    app:layout_constraintRight_toLeftOf="@+id/localHelpButton"
+                    app:layout_constraintTop_toBottomOf="@+id/localSettingsHeaderLayout" />
+
+                <Button
+                    android:id="@+id/localHelpButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginBottom="12dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/help"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toTopOf="@+id/localSettingsLayout"
+                    app:layout_constraintLeft_toRightOf="@+id/localSpacer"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/localSettingsHeaderLayout" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/localSettingsLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/globalButton">
+
+                    <TextView
+                        android:id="@+id/localFontLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_typeface"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/localFontBrowse"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/localFontBrowse"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/browse"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/localFontSizeLayout"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/localFontLabel" />
+
+                    <LinearLayout
+                        android:id="@+id/localFontSizeLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="7dp"
+                        app:layout_constraintBottom_toTopOf="@+id/localWordWrapLabel"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/localFontBrowse">
+
+                        <TextView
+                            android:id="@+id/localFontSizeLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settings_fontsize"
+                            android:textSize="16dp"
+                            android:layout_weight="0"
+                            android:layout_gravity="left|center_vertical" />
+
+                        <Spinner
+                            android:id="@+id/localFontSize"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:spinnerMode="dropdown"
+                            android:layout_weight="1"
+                            android:layout_gravity="left|center_vertical" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/localWordWrapLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/label_wordwrap"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/localWordWrapGroup"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/localFontSizeLayout" />
+
+                    <RadioGroup
+                        android:id="@+id/localWordWrapGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:paddingLeft="24dp"
+                        app:layout_constraintBottom_toTopOf="@+id/localTextDirLabel"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/localWordWrapLabel">
+
+                        <RadioButton
+                            android:id="@+id/localWordWrapGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/useglobal"
+                            android:textSize="16dp" />
+
+                        <RadioButton
+                            android:id="@+id/localWordWrapOn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="1"
+                            android:text="@string/on"
+                            android:textSize="16dp" />
+
+                        <RadioButton
+                            android:id="@+id/localWordWrapOff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="1"
+                            android:text="@string/off"
+                            android:textSize="16dp" />
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/localTextDirLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/settings_textDir"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/localTextDirGroup"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/localWordWrapGroup" />
+
+                    <RadioGroup
+                        android:id="@+id/localTextDirGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:paddingLeft="24dp"
+                        app:layout_constraintBottom_toTopOf="@+id/localCancelButton"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/localTextDirLabel">
+
+                        <RadioButton
+                            android:id="@+id/localTextDirGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/useglobal"
+                            android:textSize="16dp" />
+
+                        <RadioButton
+                            android:id="@+id/localTextDirLTR"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="1"
+                            android:text="@string/LTR"
+                            android:textSize="16dp" />
+
+                        <RadioButton
+                            android:id="@+id/localTextDirRTL"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="1"
+                            android:text="@string/RTL"
+                            android:textSize="16dp" />
+                    </RadioGroup>
+
+                    <Button
+                        android:id="@+id/localCancelButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:layout_marginRight="8dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/cancel"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="1"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@+id/localSaveButton"
+                        app:layout_constraintTop_toBottomOf="@+id/localTextDirGroup" />
+
+                    <Button
+                        android:id="@+id/localSaveButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/save"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/localCancelButton"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/localTextDirGroup" />
+
+                </android.support.constraint.ConstraintLayout>
+            </android.support.constraint.ConstraintLayout>
+        </ScrollView>
+    </ViewAnimator>
+</android.support.constraint.ConstraintLayout>

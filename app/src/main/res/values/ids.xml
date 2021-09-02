@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="zero" type="id"/>
+    <item name="one" type="id"/>
+    <item name="two" type="id"/>
+    <item name="three" type="id"/>
+    <item name="four" type="id"/>
+    <item name="five" type="id"/>
+    <item name="six" type="id"/>
+    <item name="seven" type="id"/>
+    <item name="eight" type="id"/>
+    <item name="nine" type="id"/>
+    <item name="ten" type="id"/>
+    <item name="eleven" type="id"/>
+    <item name="dialog_layout" type="id"/>
+    <item name="dialog_layout_title" type="id"/>
+    <item name="dialog_icon" type="id"/>
+    <item name="dialog_title" type="id"/>
+    <item name="dialog_message" type="id"/>
+    <item name="dialog_view" type="id"/>
+    <item name="dialog_layout_button" type="id"/>
+    <item name="dialog_negative_button" type="id"/>
+    <item name="dialog_neutral_button" type="id"/>
+    <item name="dialog_positive_button" type="id"/>
+</resources>

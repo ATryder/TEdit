@@ -1,0 +1,1 @@
+Grafik dosya tarayıcısına sahip bir metin düzenleyici.

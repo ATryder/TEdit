@@ -1,0 +1,1 @@
+A text editor with graphical file browser.

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/cream">
+
+    <LinearLayout
+        android:id="@+id/savelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:paddingTop="5dp">
+
+        <EditText
+            android:id="@+id/filename"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left"
+            android:layout_weight="1"
+            android:background="@color/coffeeNcream"
+            android:inputType="textNoSuggestions"
+            android:lines="1"
+            android:maxLines="1"
+            android:padding="3dp"
+            android:text="@string/save_filename"
+            android:textColor="@color/cream"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:id="@+id/savebutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left"
+            android:layout_marginLeft="10dp"
+            android:background="@android:color/transparent"
+            android:onClick="saveFile"
+            app:srcCompat="@drawable/button_drk_check" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/savebrowsepathlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp">
+        
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|left">
+        
+            <TextView
+                android:id="@+id/savebrowsepath"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|left"
+                android:singleLine="true"
+                android:scrollbars="none"
+                android:textSize="18sp" />
+        </HorizontalScrollView>
+
+    </LinearLayout>
+    
+    <ListView android:id="@+id/android:list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/android:empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="@string/empty_dir"/>
+
+</LinearLayout>
